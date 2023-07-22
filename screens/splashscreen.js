@@ -3,12 +3,11 @@ import { View, Image, StyleSheet } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 
 const SplashScreenComponent = () => {
-//   useEffect(() => {
-//     SplashScreen.hide();
-//   }, []);
+
 
   return (
     <View style={styles.container}>
+    
       <Image
         source={require('../assets/splash.png')}
         style={styles.splashImage}
@@ -22,12 +21,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'black', 
+        backgroundColor: '#2D1D13', 
+
   },
   splashImage: {
     width: '100%',
     height: '100%',
-    resizeMode: 'contain',
+    // resizeMode: 'contain',
   },
 });
 
