@@ -1,20 +1,45 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, Animated, Easing } from 'react-native';
+import SplashScreenComponent from './screens/splashscreen';
+import Dashboard from './screens/dashboard';
 
-export default function App() {
+const App = () => {
+  const [showSplash, setShowSplash] = useState(true);
+  const [fadeAnimSplash] = useState(new Animated.Value(1));
+  const [delayOver, setDelayOver] = useState(false); 
+
+  useEffect(() => {
+    setTimeout(() => {
+      setDelayOver(true);
+    }, 2000);
+  }, []);
+
+  useEffect(() => {
+    if (delayOver) {
+      Animated.timing(fadeAnimSplash, {
+        toValue: 0,
+        duration: 1000, 
+        useNativeDriver: true,
+        easing: Easing.ease,
+      }).start(() => {
+        setShowSplash(false);
+      });
+    }
+  }, [delayOver]);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      {showSplash ? (
+        <Animated.View style={{ flex: 1, opacity: fadeAnimSplash }}>
+          <SplashScreenComponent />
+        </Animated.View>
+      ) : (
+        <Animated.View style={{ flex: 1, opacity: 1 }}>
+          <Dashboard />
+        </Animated.View>
+      )}
+    </>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
